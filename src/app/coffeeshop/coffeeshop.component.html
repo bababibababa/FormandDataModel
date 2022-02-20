@@ -1,0 +1,57 @@
+<h1>Coffee Please</h1>
+<h2 id="name">
+    <p style="color: darkblue; background-color: burlywood; width: fit-content;">{{orderForm.value.name}}</p>
+</h2>
+<form [formGroup]="orderForm">
+
+    <div>
+        <label>Name :</label><br>
+        <input formControlName="name">
+        <span style="color: red;" *ngIf="orderForm.get('name')?.errors?.['required']">Name Required!!!!!!</span>
+
+    </div><br>
+    <div>
+        <label>Email :</label><br>
+        <input formControlName="email">
+        <span style="color: red;" *ngIf="orderForm.get('email')?.errors?.['required']">Email Required!!!!!!</span>
+        <span style="color: red;" *ngIf="orderForm.get('email')?.errors?.['email']">Email format is invalid</span>
+    </div><br>
+    <div>
+        <label>Phone :</label><br>
+        <input formControlName="phone">
+        <span style="color: red;" *ngIf="orderForm.get('phone')?.errors?.['required']">Phone number Required!!!!!!</span>
+        <span style="color: red;" *ngIf="orderForm.get('phone')?.errors?.['minlength']">Phone number format is invalid</span>
+    </div><br>
+    <div class="drinks"><br>
+        <select name="" id="" formControlName="drink">
+          <option value="null">What would you like to drink?</option>
+          <option *ngFor="let menu of drink" [ngValue]="menu.name">
+            {{menu.name}}
+          </option>
+        </select>
+    </div><br>
+    <div>
+        <label>Hot or Cold?</label><br>
+        <input name="temp" type="radio" formControlName="tempPreference" value="Hot">
+        <label for="Hot">Hot</label><br>
+        <input name="temp" type="radio" formControlName="tempPreference" value="Cold">
+        <label for="Cold">Cold</label><br>
+    </div><br>
+    <div class="sendtext">
+        <input type="checkbox" formControlName="sendText" id="sendtext"> Send me a text message when my order is ready
+    </div><br>
+
+    <button [disabled]="orderForm.invalid" (click)="submitForm()">Place order</button>
+
+
+
+</form>
+<div *ngIf="confirm" id="confirmbox">
+    <h1>Order Confirmation</h1>
+    <p>{{ orderForm.value.name | json }} {{orderForm.value.drink | json}} {{orderForm.value.tempPreference | json}}
+    </p>
+
+    <i style="text-decoration: underline;">
+        Date Submitted : {{orderForm.value.Date}}
+    </i>
+</div>
